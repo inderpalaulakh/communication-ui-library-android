@@ -4,6 +4,7 @@
 package com.azure.android.communication.ui.presentation
 
 import android.annotation.SuppressLint
+import android.app.PictureInPictureParams
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -68,6 +69,16 @@ internal class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onUserLeaveHint() {
+        super.onUserLeaveHint()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            enterPictureInPictureMode(PictureInPictureParams.Builder().build())
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            enterPictureInPictureMode()
+        }
+
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies()
         lifecycleScope.launch { errorHandler.start() }

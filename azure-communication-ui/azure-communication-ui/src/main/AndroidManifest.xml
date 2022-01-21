@@ -21,6 +21,7 @@
         <activity
             android:name="com.azure.android.communication.ui.presentation.MainActivity"
             android:theme="@style/AzureCommunicationUI.Theme.Calling"
+            android:supportsPictureInPicture="true"
             android:launchMode="singleTask"
             />
         <service
