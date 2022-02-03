@@ -21,9 +21,13 @@ public final class CallCompositeBuilder {
      * @param theme {@link ThemeConfiguration}.
      * @return {@link CallCompositeBuilder}
      */
-    public CallCompositeBuilder theme(final ThemeConfiguration theme, final LocaleConfiguration localeConfiguration) {
+    public CallCompositeBuilder theme(final ThemeConfiguration theme) {
         this.themeConfig = theme;
-        this.localeConfiguration = localeConfiguration;
+        return this;
+    }
+
+    public  CallCompositeBuilder locale(final LocaleConfiguration locale) {
+        this.localeConfiguration = locale;
         return this;
     }
 
@@ -35,6 +39,7 @@ public final class CallCompositeBuilder {
     public CallComposite build() {
         final CallCompositeConfiguration config = new CallCompositeConfiguration();
         config.setThemeConfig(themeConfig);
+        config.setLocaleConfiguration(localeConfiguration);
 
         return new CallComposite(config);
     }

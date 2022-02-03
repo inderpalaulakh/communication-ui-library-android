@@ -5,9 +5,6 @@ package com.azure.android.communication.ui;
 
 import android.content.Context;
 import com.azure.android.communication.common.CommunicationTokenCredential;
-import com.azure.android.communication.ui.configuration.LocaleConfiguration;
-
-import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -18,7 +15,6 @@ public final class GroupCallOptions {
     private final CommunicationTokenCredential communicationTokenCredential;
     private final String displayName;
     private final UUID groupId;
-    private final LocaleConfiguration localeConfiguration;
 
     /**
      * Create {@link GroupCallOptions}.
@@ -47,19 +43,6 @@ public final class GroupCallOptions {
         this.communicationTokenCredential = communicationTokenCredential;
         this.displayName = displayName;
         this.groupId = groupId;
-        this.localeConfiguration = new LocaleConfiguration("en", false);
-    }
-
-    public GroupCallOptions(Context context,
-                            CommunicationTokenCredential communicationTokenCredential,
-                            String displayName,
-                            UUID groupId,
-                            LocaleConfiguration localeConfiguration) {
-        this.context = context;
-        this.communicationTokenCredential = communicationTokenCredential;
-        this.displayName = displayName;
-        this.groupId = groupId;
-        this.localeConfiguration = localeConfiguration;
     }
 
     /**
@@ -92,10 +75,5 @@ public final class GroupCallOptions {
      */
     public UUID getGroupId() {
         return groupId;
-    }
-
-
-    public LocaleConfiguration getLocaleConfiguration() {
-        return localeConfiguration;
     }
 }
