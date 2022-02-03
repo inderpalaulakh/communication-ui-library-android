@@ -11,6 +11,7 @@ internal class CallCompositeConfiguration {
     var themeConfig: ThemeConfiguration? = null
     var callCompositeEventsHandler = CallCompositeEventsHandler()
     var callConfig: CallConfiguration? = null
+    var localeConfiguration: LocaleConfiguration? = null
 
     /*
     CallCompositeConfiguration Storage

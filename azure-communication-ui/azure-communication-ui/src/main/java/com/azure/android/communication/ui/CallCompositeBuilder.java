@@ -3,6 +3,7 @@
 
 package com.azure.android.communication.ui;
 
+import com.azure.android.communication.ui.configuration.LocaleConfiguration;
 import com.azure.android.communication.ui.configuration.ThemeConfiguration;
 import com.azure.android.communication.ui.configuration.CallCompositeConfiguration;
 
@@ -12,6 +13,7 @@ import com.azure.android.communication.ui.configuration.CallCompositeConfigurati
 public final class CallCompositeBuilder {
 
     private ThemeConfiguration themeConfig = null;
+    private LocaleConfiguration localeConfiguration = null;
 
     /**
      * Sets an optional theme for call-composite to use by {@link CallComposite}.
@@ -19,8 +21,9 @@ public final class CallCompositeBuilder {
      * @param theme {@link ThemeConfiguration}.
      * @return {@link CallCompositeBuilder}
      */
-    public CallCompositeBuilder theme(final ThemeConfiguration theme) {
+    public CallCompositeBuilder theme(final ThemeConfiguration theme, final LocaleConfiguration localeConfiguration) {
         this.themeConfig = theme;
+        this.localeConfiguration = localeConfiguration;
         return this;
     }
 
