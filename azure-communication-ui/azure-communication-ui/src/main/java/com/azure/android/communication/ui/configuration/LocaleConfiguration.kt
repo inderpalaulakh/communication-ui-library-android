@@ -6,8 +6,6 @@ internal class LocaleConfiguration {
     private var language: String? = ""
     private var isRTL: Boolean? = null
     private var customString = HashMap<String, String>()
-    private var customStringJsonObject = JSONObject()
-
 
     constructor (
         language: String?,
@@ -22,9 +20,5 @@ internal class LocaleConfiguration {
     constructor(language: String?, isRTL: Boolean?) {
         this.language = language
         this.isRTL = isRTL
-    }
-
-    constructor(customStringJSONObject: JSONObject) {
-       this.customStringJsonObject = customStringJSONObject
     }
 }
