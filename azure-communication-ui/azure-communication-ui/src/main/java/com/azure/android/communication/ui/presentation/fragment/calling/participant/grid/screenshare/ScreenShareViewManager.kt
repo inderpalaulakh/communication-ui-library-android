@@ -7,9 +7,12 @@ import android.content.Context
 import android.content.res.Configuration
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
+import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.azure.android.communication.calling.RendererListener
 import com.azure.android.communication.calling.VideoStreamRenderer
@@ -30,40 +33,36 @@ internal class ScreenShareViewManager(
     // applying transformation to renderer view does not reset on screen share
     private lateinit var rendererViewTransformationWrapper: LinearLayout
 
-    fun getScreenShareView(rendererView: View): ScreenShareZoomFrameLayout {
-        val videoStreamRenderer = getScreenShareVideoStreamRendererCallback()
-        val streamSize = videoStreamRenderer?.size
+    fun getScreenShareView(rendererView: View): View {
 
-        // if the stream size is null, it indicates frame is not rendered yet
-        // until first frame is not rendered the size(width, height) of video will be 0
-        if (streamSize == null) {
-            videoStreamRenderer?.addRendererListener(rendererListener())
-        }
+        val linearLayout = FrameLayout(context)
 
-        rendererViewTransformationWrapper = LinearLayout(this.context)
-        rendererViewTransformationWrapper.addView(rendererView)
+        linearLayout.addView(rendererView)
 
-        screenShareZoomFrameLayout = ScreenShareZoomFrameLayout(this.context)
-        screenShareZoomFrameLayout.layoutParams =
-            FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT
+        val scrollView = ScrollView(context)
+        scrollView.layoutParams =
+            ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
             )
+        scrollView.addView(linearLayout)
 
-        screenShareZoomFrameLayout.addView(rendererViewTransformationWrapper)
-        screenShareZoomFrameLayout.setFloatingHeaderCallback(showFloatingHeaderCallBack)
+        val horizontalScrollView = HorizontalScrollView(context)
+        horizontalScrollView.layoutParams =
+            ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+        horizontalScrollView.addView(scrollView)
 
-        videoContainer.viewTreeObserver.addOnGlobalLayoutListener(object :
-                ViewTreeObserver.OnGlobalLayoutListener {
-                override fun onGlobalLayout() {
-                    videoContainer.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    // update view size only after child is added successfully
-                    // otherwise renderer video size will be 0
-                    setScreenShareLayoutSize()
-                }
-            })
+        videoContainer.addView(horizontalScrollView, 0)
 
-        return screenShareZoomFrameLayout
+        val lp = rendererView.layoutParams
+        lp.height = 1080*3//962//1080
+        lp.width = 1920*3//1710//1920
+        rendererView.layoutParams = lp
+
+        return horizontalScrollView
     }
 
     private fun rendererListener() = object : RendererListener {

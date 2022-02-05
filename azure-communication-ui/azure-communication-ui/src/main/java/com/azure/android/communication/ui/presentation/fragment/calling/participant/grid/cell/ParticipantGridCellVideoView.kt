@@ -112,7 +112,7 @@ internal class ParticipantGridCellVideoView(
                     getScreenShareVideoStreamRendererCallback,
                     showFloatingHeaderCallBack
                 )
-                videoContainer.addView(screenShareFactory.getScreenShareView(rendererView), 0)
+                screenShareFactory.getScreenShareView(rendererView)
                 return
             }
         }
