@@ -109,7 +109,7 @@ internal class ParticipantGridCellVideoView(
                     getScreenShareVideoStreamRendererCallback,
                     showFloatingHeaderCallBack
                 )
-                videoContainer.addView(screenShareFactory.getScreenShareView(rendererView), 0)
+                screenShareFactory.getScreenShareView(rendererView)
                 // scaled transformed view round corners are not visible when scroll is not at end
                 // to avoid content outside speaking rectangle removing round corners
                 videoContainer.background = ContextCompat.getDrawable(
