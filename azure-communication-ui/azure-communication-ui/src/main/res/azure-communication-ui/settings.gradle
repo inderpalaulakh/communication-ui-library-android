@@ -1,3 +1,0 @@
-include ':azure-communication-ui'
-include ':azure-communication-ui-demo-app'
-
