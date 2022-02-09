@@ -82,14 +82,14 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout"
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation "com.azure.android:azure-core:$azure_core_version"
-    implementation "com.azure.android:azure-communication-calling:$calling_sdk_version"
+    implementation(name: "azure-communication-calling-1.0.0-beta.1", ext: 'aar')
     implementation "com.microsoft.device:dualscreen-layout:1.0.0-alpha01"
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation "com.microsoft.fluentui:fluentui_others:$fluent_ui_version"
     implementation "com.microsoft.fluentui:fluentui_drawer:$fluent_ui_version"
     implementation "com.microsoft.fluentui:fluentui_persona:$fluent_ui_version"
     implementation "com.microsoft.fluentui:fluentui_transients:$fluent_ui_version"
-
+    implementation 'com.azure.android:azure-communication-common:1.0.0'
     testImplementation 'androidx.arch.core:core-testing:2.1.0'
     testImplementation "junit:junit:$junit"
     testImplementation 'org.mockito:mockito-inline:4.3.1'
