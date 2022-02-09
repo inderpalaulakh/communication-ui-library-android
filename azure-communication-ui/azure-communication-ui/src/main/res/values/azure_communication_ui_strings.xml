@@ -1,6 +1,5 @@
 <resources>
     <string name="azure_communication_ui_title_activity_main">MainActivity</string>
-    <string name="test_test">test</string>
     <string name="azure_communication_ui_switch_camera_button">Switch Camera Button</string>
     <string name="azure_communication_ui_setup_gradient">Setup Gradient</string>
     <string name="azure_communication_ui_setup_video_off">Video off</string>
