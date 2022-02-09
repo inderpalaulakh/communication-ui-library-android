@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="azure_communication_ui_title_activity_main">MainActivity</string>
+  <string name="azure_communication_ui_title_activity_main_activity">MainActivity</string>
   <string name="azure_communication_ui_switch_camera_button">Schaltfläche „Kamera wechseln“</string>
   <string name="azure_communication_ui_setup_gradient">Farbverlauf einrichten</string>
   <string name="azure_communication_ui_setup_video_off">Video aus</string>
