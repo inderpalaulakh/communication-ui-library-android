@@ -13,8 +13,10 @@ import android.graphics.PointF
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import kotlin.math.abs
 import kotlin.math.hypot
 
@@ -51,9 +53,21 @@ internal class ScreenShareZoomFrameLayout :
     private val doubleTapScreenSharePoint = PointF()
     private val doubleTapZoomAnimator = ValueAnimator.ofFloat(0f, 1f)
     private var doubleTapScroll = false
+    private lateinit var tview:LinearLayout
+    private lateinit var rrrview:View
+
+
+    private var lastWidth = 0
+    private var lastHeight = 0
+    private var isWidth = false
 
     init {
         doubleTapZoomAnimator.interpolator = DecelerateInterpolator()
+    }
+
+    fun setTView(view:LinearLayout, rview: View) {
+        tview = view
+        rrrview = rview
     }
 
     // zoom is enabled after the size of screen share view is set
@@ -77,13 +91,40 @@ internal class ScreenShareZoomFrameLayout :
         previousTransform.set(activeTransform)
     }
 
+    var i = 0
+   var added = false
+
     override fun updateTransformation() {
         val transformCorrected = applyTransform(activeTransform)
         onTransformChanged()
         if (transformCorrected) {
             gestureListener.resetPointers()
+
+
+            if(i == 0 ){
+               // tview.removeView(rrrview)
+            }
+
+            if(i <= 200) {
+                val layoutParams = tview.layoutParams
+                layoutParams.width = lastWidth
+                layoutParams.height = lastHeight
+                tview.layoutParams = layoutParams
+
+            }
+
+            if(i == 200) {
+              //  tview.addView(rrrview)
+            }
+            i++
+
+            if(!added && lastWidth > 4100) {
+                added = true
+                tview.addView(rrrview)
+            }
         }
     }
+
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (isZoomEnabled && gestureListener.onTouchEvent(event)) {
@@ -181,6 +222,7 @@ internal class ScreenShareZoomFrameLayout :
         val rect = RectF()
         rect.set(screenShareViewBounds)
         transform.mapRect(rect)
+        isWidth = true
         val offsetLeft = getOffset(
             rect.left,
             rect.right,
@@ -188,6 +230,7 @@ internal class ScreenShareZoomFrameLayout :
             zoomFrameViewBounds.right,
             screenShareViewBounds.centerX()
         )
+        isWidth = false
         val offsetTop = getOffset(
             rect.top,
             rect.bottom,
@@ -211,6 +254,12 @@ internal class ScreenShareZoomFrameLayout :
         limitCenter: Float,
     ): Float {
         val viewWidth = viewEnd - viewStart
+        if(isWidth) {
+            lastWidth = viewWidth.toInt()
+        } else {
+            lastHeight = viewWidth.toInt()
+        }
+
         val limitWidth = limitEnd - limitStart
         val limitInnerWidth = (limitCenter - limitStart).coerceAtMost(limitEnd - limitCenter) * 2
         // center if smaller than limitInnerWidth

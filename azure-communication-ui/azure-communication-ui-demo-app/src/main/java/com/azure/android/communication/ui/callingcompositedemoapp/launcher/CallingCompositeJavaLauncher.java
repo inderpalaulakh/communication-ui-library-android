@@ -37,7 +37,6 @@ public class CallingCompositeJavaLauncher implements CallingCompositeLauncher {
                 new CallCompositeBuilder()
 //                        .theme(new ThemeConfiguration(R.style.MyCompany_Theme))
                         .build();
-
         callComposite.setOnErrorHandler(new CallLauncherActivityErrorHandler(callLauncherActivity));
 
         final CommunicationTokenRefreshOptions communicationTokenRefreshOptions =
