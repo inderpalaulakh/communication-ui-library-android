@@ -33,6 +33,7 @@
     <string name="azure_communication_ui_call_recording_started"><b>Recording has started.</b> By joining, you are
         giving consent for this meeting to be transcribed.
          <u>Privacy policy</u></string>
+    <string name="azure_communication_ui_call_privacy_policy"><u>Privacy policy</u></string>
     <string name="azure_communication_ui_call_recording_stopped"><b>Recording is being saved.</b> Recording has stopped.
          <u>Learn More</u></string>
     <string name="azure_communication_ui_call_transcription_started"><b>Transcription has started.</b> By joining, you
