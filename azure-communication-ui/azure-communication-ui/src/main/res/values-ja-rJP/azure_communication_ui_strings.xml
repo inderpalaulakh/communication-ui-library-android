@@ -32,6 +32,7 @@ https://support.microsoft.com/en-us/office/record-a-meeting-in-teams-34dfbe7f-b0
   <string name="azure_communication_ui_call_recording_started"><b>Recording has started.</b> By joining, you are
         giving consent for this meeting to be transcribed.
          <u>Privacy policy</u></string>
+  <string name="azure_communication_ui_call_privacy_policy"><u>Privacy policy</u></string>
   <string name="azure_communication_ui_call_recording_stopped"><b>レコーディングを保存しています。</b>レコーディングを停止しました。
          <u>詳細情報の</u></string>
   <string name="azure_communication_ui_call_transcription_started"><b>Transcription has started.</b> By joining, you

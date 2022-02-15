@@ -32,6 +32,7 @@ https://support.microsoft.com/en-us/office/record-a-meeting-in-teams-34dfbe7f-b0
   <string name="azure_communication_ui_call_recording_started"><b>Aufzeichnung wurde gestartet.</b> Durch Ihre Teilnahme sind Sie
         die Zustimmung zum Transkribieren dieser Besprechung erteilen.
          <u>Datenschutzrichtlinie</u></string>
+  <string name="azure_communication_ui_call_privacy_policy"><u>Privacy policy</u></string>
   <string name="azure_communication_ui_call_recording_stopped"><b>Aufzeichnung wird gespeichert. </b> Aufzeichnung wurde beendet.
          <u>Weitere Informationen</u></string>
   <string name="azure_communication_ui_call_transcription_started"><b>Transkription wurde gestartet.</b> Indem Sie teilnehmen,
