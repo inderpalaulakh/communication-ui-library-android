@@ -17,6 +17,7 @@ import com.azure.android.communication.ui.redux.state.AudioDeviceSelectionStatus
 import com.azure.android.communication.ui.redux.state.ReduxState
 import com.azure.android.communication.ui.utilities.FeatureFlags
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filter
 
 internal class AudioSessionManager(
     private val store: Store<ReduxState>,
@@ -48,14 +49,12 @@ internal class AudioSessionManager(
 
         initializeAudioDeviceState()
         updateBluetoothStatus()
-        store.getStateFlow().collect {
-            if (previousAudioDeviceSelectionStatus == null ||
-                previousAudioDeviceSelectionStatus != it.localParticipantState.audioState.device
-            ) {
-                onAudioDeviceStateChange(it.localParticipantState.audioState.device)
-            }
-
-            previousAudioDeviceSelectionStatus = it.localParticipantState.audioState.device
+        store.getStateFlow().filter {
+            (previousAudioDeviceSelectionStatus == null ||
+                    previousAudioDeviceSelectionStatus != it.localParticipantState.audioState.device)
+        }.collect {
+                switchAudioDevice(it.localParticipantState.audioState.device)
+                previousAudioDeviceSelectionStatus = it.localParticipantState.audioState.device
         }
     }
 
@@ -73,7 +72,7 @@ internal class AudioSessionManager(
             // If bluetooth dropped
             store.dispatch(
                 LocalParticipantAction.AudioDeviceChangeRequested(
-                    AudioDeviceSelectionStatus.SPEAKER_REQUESTED
+                    AudioDeviceSelectionStatus.SPEAKER_SELECTED
                 )
             )
         }
@@ -87,7 +86,7 @@ internal class AudioSessionManager(
             )
             store.dispatch(
                 LocalParticipantAction.AudioDeviceChangeRequested(
-                    AudioDeviceSelectionStatus.BLUETOOTH_SCO_REQUESTED
+                    AudioDeviceSelectionStatus.BLUETOOTH_SCO_SELECTED
                 )
             )
         } else {
@@ -123,38 +122,17 @@ internal class AudioSessionManager(
         }
     }
 
-    private fun onAudioDeviceStateChange(audioDeviceSelectionStatus: AudioDeviceSelectionStatus) {
-        when (audioDeviceSelectionStatus) {
-            AudioDeviceSelectionStatus.SPEAKER_REQUESTED, AudioDeviceSelectionStatus.RECEIVER_REQUESTED, AudioDeviceSelectionStatus.BLUETOOTH_SCO_REQUESTED ->
-                switchAudioDevice(audioDeviceSelectionStatus)
-        }
-    }
 
     private fun switchAudioDevice(audioDeviceSelectionStatus: AudioDeviceSelectionStatus) {
         when (audioDeviceSelectionStatus) {
-            AudioDeviceSelectionStatus.SPEAKER_REQUESTED -> {
+            AudioDeviceSelectionStatus.SPEAKER_SELECTED -> {
                 enableSpeakerPhone()
-                store.dispatch(
-                    LocalParticipantAction.AudioDeviceChangeSucceeded(
-                        AudioDeviceSelectionStatus.SPEAKER_SELECTED
-                    )
-                )
             }
-            AudioDeviceSelectionStatus.RECEIVER_REQUESTED -> {
+            AudioDeviceSelectionStatus.RECEIVER_SELECTED -> {
                 enableEarpiece()
-                store.dispatch(
-                    LocalParticipantAction.AudioDeviceChangeSucceeded(
-                        AudioDeviceSelectionStatus.RECEIVER_SELECTED
-                    )
-                )
             }
-            AudioDeviceSelectionStatus.BLUETOOTH_SCO_REQUESTED -> {
+            AudioDeviceSelectionStatus.BLUETOOTH_SCO_SELECTED -> {
                 enableBluetooth()
-                store.dispatch(
-                    LocalParticipantAction.AudioDeviceChangeSucceeded(
-                        AudioDeviceSelectionStatus.BLUETOOTH_SCO_SELECTED
-                    )
-                )
             }
         }
     }
