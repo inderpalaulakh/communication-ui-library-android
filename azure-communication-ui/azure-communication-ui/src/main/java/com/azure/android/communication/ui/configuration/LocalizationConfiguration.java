@@ -5,6 +5,10 @@ package com.azure.android.communication.ui.configuration;
 
 import com.azure.android.communication.ui.CallComposite;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Localization configuration to provide for CallComposite.
  *
@@ -24,6 +28,7 @@ import com.azure.android.communication.ui.CallComposite;
 public class LocalizationConfiguration {
     private String language;
     private boolean isRightToLeft;
+    private Map<String, String> customTranslations;
 
     /**
      * Create Localization configuration.
@@ -33,6 +38,21 @@ public class LocalizationConfiguration {
      */
     public LocalizationConfiguration(final String language, final boolean isRightToLeft) {
         this.language = language;
+        this.isRightToLeft = isRightToLeft;
+    }
+
+    /**
+     * Create Localization configuration.
+     *
+     * @param language           string eg,. "en"
+     * @param customTranslations map, key: string key, value: string value
+     * @param isRightToLeft      boolean the layout direction
+     */
+    public LocalizationConfiguration(final String language,
+                                     final Map<String, String> customTranslations,
+                                     final boolean isRightToLeft) {
+        this.language = language;
+        this.customTranslations = customTranslations;
         this.isRightToLeft = isRightToLeft;
     }
 
@@ -61,5 +81,14 @@ public class LocalizationConfiguration {
      */
     public boolean isRightToLeft() {
         return isRightToLeft;
+    }
+
+    /**
+     * Get supported languages list
+     *
+     * @return support languages string list
+     */
+    public List<String> getSupportedLanguages() {
+        return Collections.emptyList();
     }
 }
