@@ -13,7 +13,7 @@ import java.net.URL
 class LocalParticipantInitializedHandler :
     LocalParticipantInitializedHandler {
 
-    override fun handle(localParticipantManager: LocalParticipantManager) {
+    override fun initialization() {
         Thread {
             val avatarPersonaData =
                 PersonaData()
@@ -22,8 +22,9 @@ class LocalParticipantInitializedHandler :
             val image = BitmapFactory.decodeStream(url.openConnection().getInputStream())
             avatarPersonaData.avatarImageBitmap = image
 
-            // val a: AvatarPersonaData = localParticipantManager.localParticipantAvatar
-            localParticipantManager.personaData = avatarPersonaData
+            callComposite.setLocalParticipantPersonaData(
+                avatarPersonaData
+            )
         }.start()
     }
 }

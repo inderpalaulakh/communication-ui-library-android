@@ -16,7 +16,6 @@ class RemoteParticipantJoinedHandler :
 
     override fun handle(
         communicationIdentifier: CommunicationIdentifier,
-        remoteParticipantManager: RemoteParticipantManager,
     ) {
         Thread {
             val avatarPersonaData =
@@ -25,10 +24,26 @@ class RemoteParticipantJoinedHandler :
                 URL("https://dt2sdf0db8zob.cloudfront.net/wp-content/uploads/2019/12/9-Best-Online-Avatars-and-How-to-Make-Your-Own-for-Free-image1-5.png")
             val image = BitmapFactory.decodeStream(url.openConnection().getInputStream())
             avatarPersonaData.avatarImageBitmap = image
-            remoteParticipantManager.setPersonaData(
-                communicationIdentifier,
-                avatarPersonaData
-            )
+
+            // 4 mb
+            // try/catch (error handling)
+            // Exceptions
+
+            try {
+
+                callComposite.setLocalParticipantPersonaData(
+                    avatarPersonaData
+                )
+
+                callComposite.setRemoteParticipantPersonaData(
+                    communicationIdentifier,
+                    avatarPersonaData
+                )
+            } Exception (Exception: ) {
+
+
+        }
+
         }.start()
     }
 }

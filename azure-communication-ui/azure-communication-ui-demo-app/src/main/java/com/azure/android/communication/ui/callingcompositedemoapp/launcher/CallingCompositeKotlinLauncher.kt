@@ -37,24 +37,35 @@ class CallingCompositeKotlinLauncher(private val tokenRefresher: Callable<String
                 CallCompositeBuilder().build()
             }
 
-        callComposite.setOnLocalParticipantInitializedHandler(
+        // approach 1st
+        callComposite.setOnLocalParticipantHandler(
             LocalParticipantInitializedHandler()
         )
+
         callComposite.setOnRemoteParticipantJoinedHandler(
             RemoteParticipantJoinedHandler()
         )
+
         callComposite.setOnErrorHandler(CallLauncherActivityErrorHandler(callLauncherActivity))
 
         val communicationTokenRefreshOptions =
             CommunicationTokenRefreshOptions(tokenRefresher, true)
+
         val communicationTokenCredential =
             CommunicationTokenCredential(communicationTokenRefreshOptions)
 
+        class LocalPartConf {
+
+            PersonaData obj
+        }
+
+        // approach 2nd
         if (groupId != null) {
             val groupCallOptions = GroupCallOptions(
                 communicationTokenCredential,
                 groupId,
                 displayName,
+                localPartConf
             )
             callComposite.launch(callLauncherActivity, groupCallOptions)
         } else if (!meetingLink.isNullOrBlank()) {
@@ -63,7 +74,9 @@ class CallingCompositeKotlinLauncher(private val tokenRefresher: Callable<String
                 meetingLink,
                 displayName,
             )
-            callComposite.launch(callLauncherActivity, teamsMeetingOptions)
+
+            // approach 3rd
+            callComposite.launch(callLauncherActivity, teamsMeetingOptions, localPartConf)
         }
     }
 }

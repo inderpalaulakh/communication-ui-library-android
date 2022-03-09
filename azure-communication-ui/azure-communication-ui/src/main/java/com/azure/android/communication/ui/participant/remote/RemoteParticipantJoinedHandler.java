@@ -6,5 +6,7 @@ package com.azure.android.communication.ui.participant.remote;
 import com.azure.android.communication.common.CommunicationIdentifier;
 
 public interface RemoteParticipantJoinedHandler {
-    void handle(CommunicationIdentifier communicationIdentifier, RemoteParticipantManager remoteParticipantManager);
+    void Joined(CommunicationIdentifier communicationIdentifier, RemoteParticipantManager remoteParticipantManager);
+    void isMuted(CommunicationIdentifier communicationIdentifier)
+    void removed(CommunicationIdentifier communicationIdentifier)
 }
