@@ -3,10 +3,27 @@
 
 package com.azure.android.communication.ui.configuration;
 
+import com.azure.android.communication.ui.CallComposite;
 import com.azure.android.core.util.ExpandableStringEnum;
 import java.util.Collection;
 
-public final class SupportedLanguages extends ExpandableStringEnum<SupportedLanguages>
+/**
+ * Supported Languages.
+ *
+ * <pre>
+ *
+ * &#47;&#47; Initialize the call composite builder
+ * final CallCompositeBuilder builder = new CallCompositeBuilder&#40;&#41;
+ *     .customizeLocalization&#40;new LocalizationConfiguration&#40;getLanguageCode, false&#41;&#41;;
+ *
+ * &#47;&#47; Build the call composite
+ * CallComposite callComposite = builder.build&#40;&#41;;
+ *
+ * </pre>
+ *
+ * @see CallComposite
+ */
+final class SupportedLanguages extends ExpandableStringEnum<SupportedLanguages>
         implements SupportedLanguageAttributes {
     public static final SupportedLanguages ENGLISH = fromString("ENGLISH");
     public static final SupportedLanguages CHINESE_SIMPLIFIED = fromString("CHINESE_SIMPLIFIED");

@@ -25,9 +25,9 @@ import java.util.Map;
  *
  * @see CallComposite
  */
-public class LocalizationConfiguration {
-    private String language;
-    private boolean isRightToLeft;
+public final class LocalizationConfiguration {
+    private final String language;
+    private final boolean isRightToLeft;
     private Map<String, String> customTranslations;
 
     /**
@@ -54,15 +54,6 @@ public class LocalizationConfiguration {
         this.language = language;
         this.customTranslations = customTranslations;
         this.isRightToLeft = isRightToLeft;
-    }
-
-    /**
-     * Create Localization configuration.
-     *
-     * @param language string eg,. "en"
-     */
-    public LocalizationConfiguration(final String language) {
-        this.language = language;
     }
 
     /**
