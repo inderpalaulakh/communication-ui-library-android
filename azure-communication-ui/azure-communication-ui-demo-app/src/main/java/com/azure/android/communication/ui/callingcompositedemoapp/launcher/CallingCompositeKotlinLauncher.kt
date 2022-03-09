@@ -13,6 +13,9 @@ import com.azure.android.communication.ui.callingcompositedemoapp.CallLauncherAc
 import com.azure.android.communication.ui.callingcompositedemoapp.CallLauncherActivityErrorHandler
 import com.azure.android.communication.ui.callingcompositedemoapp.R
 import com.azure.android.communication.ui.callingcompositedemoapp.features.AdditionalFeatures
+import com.azure.android.communication.ui.callingcompositedemoapp.features.SettingsFeatures
+import com.azure.android.communication.ui.configuration.LocalizationConfiguration
+import com.azure.android.communication.ui.configuration.SupportedLanguages
 import com.azure.android.communication.ui.configuration.ThemeConfiguration
 import java.util.UUID
 import java.util.concurrent.Callable
@@ -30,10 +33,38 @@ class CallingCompositeKotlinLauncher(private val tokenRefresher: Callable<String
         val callComposite: CallComposite =
             if (AdditionalFeatures.secondaryThemeFeature.active)
                 CallCompositeBuilder().theme(ThemeConfiguration(R.style.MyCompany_Theme_Calling))
+                    .customizeLocalization(
+                        LocalizationConfiguration(
+                            SupportedLanguages().getLanguageCode(
+                                SupportedLanguages.fromString(
+                                    SettingsFeatures.language(
+                                        callLauncherActivity.applicationContext
+                                    )
+                                )
+                            ),
+                            SettingsFeatures.isRTL(
+                                callLauncherActivity.applicationContext
+                            )
+                        )
+                    )
                     .build()
             else
-                CallCompositeBuilder().build()
-
+                CallCompositeBuilder()
+                    .customizeLocalization(
+                        LocalizationConfiguration(
+                            SupportedLanguages().getLanguageCode(
+                                SupportedLanguages.fromString(
+                                    SettingsFeatures.language(
+                                        callLauncherActivity.applicationContext
+                                    )
+                                )
+                            ),
+                            SettingsFeatures.isRTL(
+                                callLauncherActivity.applicationContext
+                            )
+                        )
+                    )
+                    .build()
         callComposite.setOnErrorHandler(CallLauncherActivityErrorHandler(callLauncherActivity))
 
         val communicationTokenRefreshOptions =

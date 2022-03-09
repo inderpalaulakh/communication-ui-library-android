@@ -151,7 +151,11 @@ internal class CallCompositeActivity : AppCompatActivity() {
         }
 
         val config: Configuration = resources.configuration
-        config.setLocale(Locale(localeConfig.language))
+        val languageAttributes = localeConfig.language.split("-")
+        val languageCode = languageAttributes[0]
+        val countryCode =
+            if (languageAttributes.size > 1) languageAttributes[1] else ""
+        config.setLocale(Locale(languageCode, countryCode))
         resources.updateConfiguration(config, resources.displayMetrics)
     }
 

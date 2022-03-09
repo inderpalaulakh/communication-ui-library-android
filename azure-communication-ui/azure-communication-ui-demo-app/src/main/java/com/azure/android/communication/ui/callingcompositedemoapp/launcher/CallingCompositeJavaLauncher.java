@@ -13,9 +13,12 @@ import com.azure.android.communication.ui.GroupCallOptions;
 import com.azure.android.communication.ui.TeamsMeetingOptions;
 import com.azure.android.communication.ui.callingcompositedemoapp.CallLauncherActivity;
 import com.azure.android.communication.ui.callingcompositedemoapp.CallLauncherActivityErrorHandler;
+import com.azure.android.communication.ui.callingcompositedemoapp.features.SettingsFeatures;
 import com.azure.android.communication.ui.configuration.LocalizationConfiguration;
+
 import java.util.UUID;
 import java.util.concurrent.Callable;
+
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
@@ -36,7 +39,13 @@ public class CallingCompositeJavaLauncher implements CallingCompositeLauncher {
         final CallComposite callComposite =
                 new CallCompositeBuilder()
 //                        .theme(new ThemeConfiguration(R.style.MyCompany_Theme))
-                        .customizeLocalization(new LocalizationConfiguration("fr", true))
+                        .customizeLocalization(
+                                new LocalizationConfiguration(
+                                        SettingsFeatures.Companion.language(
+                                                callLauncherActivity.getApplicationContext()
+                                        )
+                                )
+                        )
                         .build();
 
         callComposite.setOnErrorHandler(new CallLauncherActivityErrorHandler(callLauncherActivity));
