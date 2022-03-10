@@ -21,6 +21,10 @@
         android:theme="@style/Theme.AppCompat"
         >
         <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:theme="@style/Launcher.Theme" />
+        <activity
             android:name="com.azure.android.communication.ui.callingcompositedemoapp.CallLauncherActivity"
             android:theme="@style/Launcher.Theme"
             android:exported="true"
