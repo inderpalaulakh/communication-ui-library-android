@@ -3,7 +3,6 @@
 
 package com.azure.android.communication.ui.callingcompositedemoapp
 
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
@@ -16,6 +15,9 @@ import com.azure.android.communication.ui.callingcompositedemoapp.features.Addit
 import com.azure.android.communication.ui.callingcompositedemoapp.features.conditionallyRegisterDiagnostics
 import com.azure.android.communication.ui.callingcompositedemoapp.launcher.CallingCompositeLauncher
 import com.azure.android.communication.ui.utilities.implementation.FeatureFlags
+import com.microsoft.appcenter.AppCenter
+import com.microsoft.appcenter.analytics.Analytics
+import com.microsoft.appcenter.crashes.Crashes
 import java.util.UUID
 
 class CallLauncherActivity : AppCompatActivity() {
@@ -26,6 +28,14 @@ class CallLauncherActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (!AppCenter.isConfigured() && !BuildConfig.DEBUG) {
+            AppCenter.start(
+                application,
+                BuildConfig.APP_SECRET,
+                Analytics::class.java,
+                Crashes::class.java
+            )
+        }
         // Register Memory Viewer with FeatureFlags
         conditionallyRegisterDiagnostics(this)
         FeatureFlags.registerAdditionalFeature(AdditionalFeatures.secondaryThemeFeature)
