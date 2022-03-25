@@ -26,6 +26,10 @@ internal class PermissionViewModel(
         displayPermissionsDialogMutableStateFlow.value = true
     }
 
+    fun hidePermissionsDialog() {
+        displayPermissionsDialogMutableStateFlow.value = false
+    }
+
     fun update(permissionState: PermissionState) {
 
         audioPermissionMutableStateFlow.value = permissionState.audioPermissionState

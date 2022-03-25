@@ -47,12 +47,17 @@ internal class JoinCallButtonHolderViewModel(
     fun update(audioPermissionState: PermissionStatus, callingState: CallingState) {
         hasAudioPermissions = audioPermissionState == PermissionStatus.GRANTED
 
+        if(hasAudioPermissions) {
+            permissionViewModel.hidePermissionsDialog()
+        }
+
         if(joinCallInProgress) {
             joinCallInProgress = false
 
             if (!hasAudioPermissions) {
                 permissionViewModel.showPermissionsDialog()
             } else {
+                permissionViewModel.hidePermissionsDialog()
                 dispatch(CallingAction.CallStartRequested())
                 disableJoinCallButtonFlow.value = true
             }
