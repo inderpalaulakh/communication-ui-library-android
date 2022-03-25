@@ -27,4 +27,5 @@ internal abstract class BaseViewModel constructor(
     protected fun dispatchAction(action: Action) {
         store.dispatch(action)
     }
+
 }

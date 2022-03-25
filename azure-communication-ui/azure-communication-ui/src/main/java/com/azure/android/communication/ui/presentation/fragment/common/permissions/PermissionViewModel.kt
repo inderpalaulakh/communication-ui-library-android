@@ -16,9 +16,10 @@ internal class PermissionViewModel(
 ) {
 
     val displayPermissionsDialogMutableStateFlow = MutableStateFlow(false)
+    lateinit var audioPermissionMutableStateFlow: MutableStateFlow<PermissionStatus>
 
     fun init(permissionState: PermissionState) {
-
+        audioPermissionMutableStateFlow = MutableStateFlow(permissionState.audioPermissionState)
     }
 
     fun showPermissionsDialog() {
@@ -26,13 +27,19 @@ internal class PermissionViewModel(
     }
 
     fun update(permissionState: PermissionState) {
+
+        audioPermissionMutableStateFlow.value = permissionState.audioPermissionState
+
         if(permissionState.audioPermissionState == PermissionStatus.NOT_ASKED) {
             displayPermissionsDialogMutableStateFlow.value =true
 
         }
         if(permissionState.audioPermissionState == PermissionStatus.DENIED) {
-            displayPermissionsDialogMutableStateFlow.value =false
+            displayPermissionsDialogMutableStateFlow.value = true
+        }
 
+        if(permissionState.audioPermissionState == PermissionStatus.GRANTED) {
+            displayPermissionsDialogMutableStateFlow.value = false
         }
     }
 

@@ -8,6 +8,8 @@ import com.azure.android.communication.ui.presentation.fragment.factories.SetupV
 import com.azure.android.communication.ui.redux.Store
 import com.azure.android.communication.ui.redux.action.CallingAction
 import com.azure.android.communication.ui.redux.action.NavigationAction
+import com.azure.android.communication.ui.redux.action.PermissionAction
+import com.azure.android.communication.ui.redux.state.PermissionStatus
 import com.azure.android.communication.ui.redux.state.ReduxState
 import kotlinx.coroutines.CoroutineScope
 
@@ -55,6 +57,10 @@ internal class SetupViewModel(
 
     fun setupCall() {
         dispatchAction(action = CallingAction.SetupCall())
+    }
+
+    fun refreshPermissions() {
+        dispatchAction(action = PermissionAction.AudioPermissionRequested())
     }
 
     fun exitComposite() {

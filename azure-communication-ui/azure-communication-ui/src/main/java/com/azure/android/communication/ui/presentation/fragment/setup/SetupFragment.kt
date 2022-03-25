@@ -3,7 +3,10 @@
 
 package com.azure.android.communication.ui.presentation.fragment.setup
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -16,13 +19,7 @@ import com.azure.android.communication.ui.R
 import com.azure.android.communication.ui.presentation.DependencyInjectionContainerHolder
 import com.azure.android.communication.ui.presentation.fragment.common.audiodevicelist.AudioDeviceListView
 import com.azure.android.communication.ui.presentation.fragment.common.permissions.PermissionView
-import com.azure.android.communication.ui.presentation.fragment.setup.components.ErrorInfoView
-import com.azure.android.communication.ui.presentation.fragment.setup.components.JoinCallButtonHolderView
-import com.azure.android.communication.ui.presentation.fragment.setup.components.PermissionWarningView
-import com.azure.android.communication.ui.presentation.fragment.setup.components.PreviewAreaView
-import com.azure.android.communication.ui.presentation.fragment.setup.components.SetupControlBarView
-import com.azure.android.communication.ui.presentation.fragment.setup.components.SetupGradientView
-import com.azure.android.communication.ui.presentation.fragment.setup.components.SetupParticipantAvatarView
+import com.azure.android.communication.ui.presentation.fragment.setup.components.*
 import com.azure.android.communication.ui.presentation.navigation.BackNavigation
 
 internal class SetupFragment :
@@ -93,6 +90,12 @@ internal class SetupFragment :
         errorInfoView.start(viewLifecycleOwner, viewModel.getErrorInfoViewModel())
 
         viewModel.setupCall()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //viewModel.refreshPermissions()
     }
 
     override fun onDestroy() {
