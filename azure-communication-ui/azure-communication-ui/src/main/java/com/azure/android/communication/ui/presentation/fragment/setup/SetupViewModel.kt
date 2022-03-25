@@ -29,6 +29,11 @@ internal class SetupViewModel(
     private val joinCallButtonHolderViewModel =
         setupViewModelProvider.provideJoinCallButtonHolderViewModel()
 
+    private val permissionsViewModel =
+        setupViewModelProvider.providePermissionsViewModel()
+
+    fun getPermissionsViewModel() = permissionsViewModel
+
     fun getJoinCallButtonHolderViewModel() = joinCallButtonHolderViewModel
 
     fun getParticipantAvatarViewModel() = participantAvatarViewModel
@@ -63,6 +68,7 @@ internal class SetupViewModel(
         localParticipantRendererViewModel.init(
             state.localParticipantState.videoStreamID,
         )
+        permissionsViewModel.init(state.permissionState)
         setupControlsViewModel.init(
             state.permissionState,
             state.localParticipantState.cameraState,
@@ -89,6 +95,7 @@ internal class SetupViewModel(
     }
 
     override suspend fun onStateChange(state: ReduxState) {
+        permissionsViewModel.update(state.permissionState)
         setupControlsViewModel.update(
             state.permissionState,
             state.localParticipantState.cameraState,

@@ -32,7 +32,9 @@ internal class JoinCallButtonHolderViewModelUnitTest {
             // arrange
             val mockAppStore = mock<AppStore<ReduxState>> {}
 
-            val viewModel = JoinCallButtonHolderViewModel(mockAppStore::dispatch, appLocalizationProvider)
+            val viewModel = JoinCallButtonHolderViewModel(mockAppStore::dispatch,
+                appLocalizationProvider,
+                permissionViewModel)
             viewModel.init(PermissionStatus.DENIED)
 
             val emitResult = mutableListOf<Boolean>()
@@ -66,7 +68,9 @@ internal class JoinCallButtonHolderViewModelUnitTest {
             // arrange
             val mockAppStore = mock<AppStore<ReduxState>> {}
 
-            val viewModel = JoinCallButtonHolderViewModel(mockAppStore::dispatch, appLocalizationProvider)
+            val viewModel = JoinCallButtonHolderViewModel(mockAppStore::dispatch,
+                appLocalizationProvider,
+                permissionViewModel)
             viewModel.init(PermissionStatus.GRANTED)
 
             val emitResult = mutableListOf<Boolean>()
@@ -100,7 +104,9 @@ internal class JoinCallButtonHolderViewModelUnitTest {
             // arrange
             val mockAppStore = mock<AppStore<ReduxState>> {}
 
-            val viewModel = JoinCallButtonHolderViewModel(mockAppStore::dispatch, appLocalizationProvider)
+            val viewModel = JoinCallButtonHolderViewModel(mockAppStore::dispatch,
+                appLocalizationProvider,
+                permissionViewModel)
             viewModel.init(PermissionStatus.GRANTED)
 
             val emitResult = mutableListOf<Boolean>()

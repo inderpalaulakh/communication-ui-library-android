@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.azure.android.communication.ui.R
 import com.azure.android.communication.ui.presentation.DependencyInjectionContainerHolder
 import com.azure.android.communication.ui.presentation.fragment.common.audiodevicelist.AudioDeviceListView
+import com.azure.android.communication.ui.presentation.fragment.common.permissions.PermissionView
 import com.azure.android.communication.ui.presentation.fragment.setup.components.ErrorInfoView
 import com.azure.android.communication.ui.presentation.fragment.setup.components.JoinCallButtonHolderView
 import com.azure.android.communication.ui.presentation.fragment.setup.components.PermissionWarningView
@@ -37,6 +38,7 @@ internal class SetupFragment :
     private lateinit var audioDeviceListView: AudioDeviceListView
     private lateinit var setupGradientView: SetupGradientView
     private lateinit var errorInfoView: ErrorInfoView
+    private lateinit var permissionView: PermissionView
     private lateinit var setupJoinCallButtonHolderView: JoinCallButtonHolderView
 
     private val videoViewManager get() = holder.container.videoViewManager
@@ -56,6 +58,9 @@ internal class SetupFragment :
             viewLifecycleOwner,
             viewModel.getJoinCallButtonHolderViewModel(),
         )
+
+        permissionView = PermissionView(viewModel.getPermissionsViewModel(), this.requireContext())
+        permissionView.start(viewLifecycleOwner)
 
         participantAvatarView = view.findViewById(R.id.azure_communication_ui_setup_default_avatar)
         participantAvatarView.start(viewLifecycleOwner, viewModel.getParticipantAvatarViewModel())

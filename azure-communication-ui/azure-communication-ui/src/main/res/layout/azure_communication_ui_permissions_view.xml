@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+   Copyright (c) Microsoft Corporation. All rights reserved.
+   Licensed under the MIT License.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/azure_communication_ui_permissions_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/azure_communication_ui_color_background"
+    android:gravity="center_horizontal"
+    android:padding="20dp"
+    tools:context="com.azure.android.communication.ui.presentation.fragment.setup.SetupFragment"
+    >
+
+    <ImageView
+        android:id="@+id/azure_communication_ui_mic_permissions_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/azure_communication_ui_permission_background"
+        android:padding="10dp"
+        android:src="@drawable/azure_communication_ui_ic_fluent_mic_on_24_permissions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/azure_communication_ui_permissions_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Allow access to mic"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/azure_communication_ui_mic_permissions_icon"
+
+        />
+
+    <TextView
+        android:id="@+id/azure_communication_ui_permissions_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="So you’re heard on the call. This is required before joining."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/azure_communication_ui_permissions_title"
+        />
+
+    <com.microsoft.fluentui.widget.Button
+        android:id="@+id/azure_communication_ui_allow_permissions_button"
+        style="@style/Widget.FluentUI.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_margin="30dp"
+        android:backgroundTint="@color/azure_communication_ui_primary_selector"
+        android:gravity="center"
+        android:maxWidth="400dp"
+        android:minWidth="400dp"
+        android:text="Allow (Required)"
+        android:textAllCaps="false"
+        android:textColor="@color/azure_communication_ui_on_primary_enabled_disabled_selector"
+        app:backgroundTint="@color/azure_communication_ui_primary_selector"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/azure_communication_ui_permissions_description"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,7 +53,7 @@ internal class SetupControlBarViewModel(
         audioDeviceSelectionStatusStateFlow = MutableStateFlow(audioState)
 
         if (permissionState.audioPermissionState == PermissionStatus.NOT_ASKED) {
-            requestAudioPermission()
+           // requestAudioPermission()
         }
     }
 
