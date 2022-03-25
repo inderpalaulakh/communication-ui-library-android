@@ -59,7 +59,7 @@ internal class JoinCallButtonHolderViewModel(
         }
 
         joinCallButtonEnabledFlow.value = true
-        disableJoinCallButtonFlow.value = false
+       
     }
 
     fun getLocalizationProvider(): LocalizationProvider {
