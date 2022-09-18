@@ -37,22 +37,22 @@ internal class CallingMiddlewareImpl(
                     callingMiddlewareActionHandler.enterForeground(store)
                 }
                 is LocalParticipantAction.CameraPreviewOnRequested -> {
-                    callingMiddlewareActionHandler.requestCameraPreviewOn(store)
+                    // callingMiddlewareActionHandler.requestCameraPreviewOn(store)
                 }
                 is LocalParticipantAction.CameraPreviewOnTriggered -> {
-                    callingMiddlewareActionHandler.turnCameraPreviewOn(store)
+                    // callingMiddlewareActionHandler.turnCameraPreviewOn(store)
                 }
                 is LocalParticipantAction.CameraOffTriggered -> {
-                    callingMiddlewareActionHandler.turnCameraOff(store)
+                    // callingMiddlewareActionHandler.turnCameraOff(store)
                 }
                 is LocalParticipantAction.CameraOnRequested -> {
-                    callingMiddlewareActionHandler.requestCameraOn(store)
+                    // callingMiddlewareActionHandler.requestCameraOn(store)
                 }
                 is LocalParticipantAction.CameraOnTriggered -> {
-                    callingMiddlewareActionHandler.turnCameraOn(store)
+                    // callingMiddlewareActionHandler.turnCameraOn(store)
                 }
                 is LocalParticipantAction.CameraSwitchTriggered -> {
-                    callingMiddlewareActionHandler.switchCamera(store)
+                    // callingMiddlewareActionHandler.switchCamera(store)
                 }
                 is LocalParticipantAction.MicOffTriggered -> {
                     callingMiddlewareActionHandler.turnMicOff(store)
