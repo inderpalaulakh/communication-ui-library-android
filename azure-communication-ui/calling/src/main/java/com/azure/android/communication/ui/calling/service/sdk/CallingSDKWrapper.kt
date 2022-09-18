@@ -41,6 +41,13 @@ internal class CallingSDKWrapper(
     private val callingSDKEventHandler: CallingSDKEventHandler,
     private val logger: Logger? = null,
 ) : CallingSDK {
+
+    // exposing call object to provide stream for raw media
+    // proof of concept code
+    companion object {
+        lateinit var call: Call
+    }
+
     private var nullableCall: Call? = null
     private var callClient: CallClient? = null
 
@@ -354,6 +361,7 @@ internal class CallingSDKWrapper(
         videoOptions?.let { joinCallOptions.videoOptions = videoOptions }
 
         nullableCall = agent.join(context, joinMeetingLocator, joinCallOptions)
+        CallingSDKWrapper.call = nullableCall!!
         callingSDKEventHandler.onJoinCall(call)
     }
 

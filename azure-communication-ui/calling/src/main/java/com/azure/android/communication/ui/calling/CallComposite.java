@@ -6,6 +6,7 @@ package com.azure.android.communication.ui.calling;
 import android.content.Context;
 import android.content.Intent;
 
+import com.azure.android.communication.calling.Call;
 import com.azure.android.communication.common.CommunicationIdentifier;
 import com.azure.android.communication.ui.calling.configuration.CallCompositeConfiguration;
 import com.azure.android.communication.ui.calling.configuration.CallConfiguration;
@@ -20,6 +21,7 @@ import com.azure.android.communication.ui.calling.models.CallCompositeParticipan
 import com.azure.android.communication.ui.calling.models.CallCompositeSetParticipantViewDataResult;
 import com.azure.android.communication.ui.calling.models.CallCompositeTeamsMeetingLinkLocator;
 import com.azure.android.communication.ui.calling.presentation.CallCompositeActivity;
+import com.azure.android.communication.ui.calling.service.sdk.CallingSDKWrapper;
 
 import static com.azure.android.communication.ui.calling.service.sdk.TypeConversionsKt.into;
 
@@ -245,5 +247,9 @@ public final class CallComposite {
                     final CallCompositeRemoteOptions remoteOptions,
                     final CallCompositeLocalOptions localOptions) {
         launchComposite(context, remoteOptions, localOptions, true);
+    }
+
+    public Call getCallObject() {
+        return CallingSDKWrapper.Companion.getCall();
     }
 }
