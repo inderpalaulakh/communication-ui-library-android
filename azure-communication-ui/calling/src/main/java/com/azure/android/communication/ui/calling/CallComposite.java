@@ -21,12 +21,9 @@ import com.azure.android.communication.ui.calling.models.CallCompositeParticipan
 import com.azure.android.communication.ui.calling.models.CallCompositeSetParticipantViewDataResult;
 import com.azure.android.communication.ui.calling.models.CallCompositeTeamsMeetingLinkLocator;
 import com.azure.android.communication.ui.calling.presentation.CallCompositeActivity;
-import com.azure.android.communication.ui.calling.presentation.fragment.calling.localuser.LocalParticipantView;
 import com.azure.android.communication.ui.calling.service.sdk.CallingSDKWrapper;
 
 import static com.azure.android.communication.ui.calling.service.sdk.TypeConversionsKt.into;
-
-import androidx.camera.view.PreviewView;
 
 import java.util.UUID;
 
@@ -255,7 +252,4 @@ public final class CallComposite {
     public Call getCallObject() {
         return CallingSDKWrapper.Companion.getCall();
     }
-
-    public PreviewView getPreviewView() { return LocalParticipantView.Companion.getPreviewView(); }
-
 }
