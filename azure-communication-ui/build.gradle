@@ -99,12 +99,7 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: "org.jlleitschuh.gradle.ktlint"
-    apply from: "../checkstyle.gradle"
-    afterEvaluate {
-        preBuild.dependsOn 'checkstyle'
-        check.dependsOn 'checkstyle'
-    }
+
 }
 
 task clean(type: Delete) {

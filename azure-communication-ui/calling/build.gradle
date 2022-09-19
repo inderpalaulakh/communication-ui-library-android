@@ -8,12 +8,12 @@ apply from: file('publish.gradle')
 apply from: file('jacoco.gradle')
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
     resourcePrefix 'azure_communication_ui_calling_'
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 32
+        targetSdkVersion 33
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -97,6 +97,7 @@ dependencies {
     implementation "com.microsoft.fluentui:fluentui_drawer:$microsoft_fluent_ui_version"
     implementation "com.microsoft.fluentui:fluentui_persona:$microsoft_fluent_ui_version"
     implementation "com.microsoft.fluentui:fluentui_transients:$microsoft_fluent_ui_version"
+    implementation "androidx.camera:camera-view:1.2.0-beta01"
 
     testImplementation "androidx.arch.core:core-testing:$androidx_core_testing_version"
     testImplementation "junit:junit:$junit_version"

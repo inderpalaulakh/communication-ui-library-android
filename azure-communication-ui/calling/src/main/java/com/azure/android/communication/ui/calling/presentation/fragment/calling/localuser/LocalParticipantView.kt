@@ -7,29 +7,30 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.accessibility.AccessibilityManager
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.camera.view.PreviewView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import com.azure.android.communication.ui.R
 import com.azure.android.communication.ui.calling.presentation.VideoViewManager
 import com.azure.android.communication.ui.calling.presentation.manager.AvatarViewManager
-import com.azure.android.communication.ui.calling.redux.state.CameraDeviceSelectionStatus
 import com.microsoft.fluentui.persona.AvatarView
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 internal class LocalParticipantView : ConstraintLayout {
+
+    companion object {
+        lateinit var previewView: PreviewView
+    }
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
     private lateinit var viewModel: LocalParticipantViewModel
     private lateinit var videoViewManager: VideoViewManager
-    private lateinit var localParticipantFullCameraHolder: ConstraintLayout
+    private lateinit var localParticipantFullCameraHolder: FrameLayout
     private lateinit var localParticipantPip: ConstraintLayout
     private lateinit var localPipWrapper: ConstraintLayout
     private lateinit var localParticipantPipCameraHolder: ConstraintLayout
@@ -42,6 +43,10 @@ internal class LocalParticipantView : ConstraintLayout {
     private lateinit var micImage: ImageView
     private lateinit var dragTouchListener: DragTouchListener
     private lateinit var accessibilityManager: AccessibilityManager
+
+    init {
+        previewView = PreviewView(context)
+    }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -87,109 +92,11 @@ internal class LocalParticipantView : ConstraintLayout {
 
         this.viewModel = viewModel
         this.videoViewManager = videoViewManager
-
-        setupAccessibility()
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getVideoStatusFlow().collect {
-                setLocalParticipantVideo(it)
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getDisplayFullScreenAvatarFlow().collect {
-                avatarHolder.visibility = if (it) View.VISIBLE else View.GONE
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getDisplayNameStateFlow().collect {
-                it?.let {
-                    avatar.name = it
-                    pipAvatar.name = it
-                    displayNameText.text = it
-                    avatarViewManager.callCompositeLocalOptions?.participantViewData?.let { participantViewData ->
-                        participantViewData.avatarBitmap?.let { image ->
-                            avatar.avatarImageBitmap = image
-                            avatar.adjustViewBounds = true
-                            avatar.scaleType = participantViewData.scaleType
-                            pipAvatar.avatarImageBitmap = image
-                            pipAvatar.adjustViewBounds = true
-                            pipAvatar.scaleType = participantViewData.scaleType
-                        }
-                        participantViewData.displayName?.let { name ->
-                            avatar.name = name
-                            pipAvatar.name = name
-                            displayNameText.text = name
-                        }
-                    }
-                }
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getLocalUserMutedStateFlow().collect { isMuted ->
-                micImage.visibility = if (isMuted) View.VISIBLE else View.GONE
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getDisplaySwitchCameraButtonFlow().collect {
-                switchCameraButton.visibility = if (it) View.VISIBLE else View.GONE
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getDisplayPipSwitchCameraButtonFlow().collect {
-                pipSwitchCameraButton.visibility = if (it) View.VISIBLE else View.GONE
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getEnableCameraSwitchFlow().collect {
-                switchCameraButton.isEnabled = it
-                pipSwitchCameraButton.isEnabled = it
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getCameraDeviceSelectionFlow().collect { cameraDeviceSelectionStatus ->
-                listOf(switchCameraButton, pipSwitchCameraButton).forEach {
-                    it.contentDescription = context.getString(
-                        when (cameraDeviceSelectionStatus) {
-                            CameraDeviceSelectionStatus.FRONT -> R.string.azure_communication_ui_calling_switch_camera_button_front
-                            else -> R.string.azure_communication_ui_calling_switch_camera_button_back
-                        }
-                    )
-                }
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getIsOverlayDisplayedFlow().collect {
-                if (it) {
-                    ViewCompat.setImportantForAccessibility(
-                        switchCameraButton,
-                        ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
-                    )
-                } else {
-                    ViewCompat.setImportantForAccessibility(
-                        switchCameraButton,
-                        ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES
-                    )
-                }
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getNumberOfRemoteParticipantsFlow().collect {
-                if (!accessibilityManager.isEnabled && it >= 1) {
-                    dragTouchListener.setView(localPipWrapper)
-                    localPipWrapper.setOnTouchListener(dragTouchListener)
-                } else {
-                    localPipWrapper.setOnTouchListener(null)
-                }
-            }
-        }
+        avatarHolder.visibility = GONE
+        localParticipantPip.visibility = GONE
+        localParticipantPipCameraHolder.removeAllViews()
+        localParticipantFullCameraHolder.removeAllViews()
+        localParticipantFullCameraHolder.addView(previewView, 0)
     }
 
     private fun setupAccessibility() {
@@ -213,7 +120,7 @@ internal class LocalParticipantView : ConstraintLayout {
         }
 
         if (model.shouldDisplayVideo) {
-            addVideoView(model.videoStreamID!!, videoHolder)
+           // addVideoView(model.videoStreamID!!, videoHolder)
         }
     }
 
