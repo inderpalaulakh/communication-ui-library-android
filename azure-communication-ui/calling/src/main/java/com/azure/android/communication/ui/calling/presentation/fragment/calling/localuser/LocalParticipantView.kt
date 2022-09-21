@@ -5,6 +5,7 @@ package com.azure.android.communication.ui.calling.presentation.fragment.calling
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.SurfaceView
 import android.view.View
 import android.view.accessibility.AccessibilityManager
 import android.widget.ImageView
@@ -24,8 +25,17 @@ import kotlinx.coroutines.launch
 
 internal class LocalParticipantView : ConstraintLayout {
 
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    companion object {
+        lateinit var surfaceView: SurfaceView
+    }
+
+    constructor(context: Context) : super(context) {
+        surfaceView = SurfaceView(context)
+    }
+
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        surfaceView = SurfaceView(context)
+    }
 
     private lateinit var viewModel: LocalParticipantViewModel
     private lateinit var videoViewManager: VideoViewManager
@@ -97,10 +107,11 @@ internal class LocalParticipantView : ConstraintLayout {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getDisplayFullScreenAvatarFlow().collect {
-                avatarHolder.visibility = if (it) View.VISIBLE else View.GONE
+                avatarHolder.visibility = View.GONE
             }
         }
 
+        pipAvatar.visibility = GONE
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getDisplayNameStateFlow().collect {
                 it?.let {
@@ -200,7 +211,7 @@ internal class LocalParticipantView : ConstraintLayout {
     }
 
     private fun setLocalParticipantVideo(model: LocalParticipantViewModel.VideoModel) {
-        videoViewManager.updateLocalVideoRenderer(model.videoStreamID)
+        // videoViewManager.updateLocalVideoRenderer(model.videoStreamID)
         localParticipantFullCameraHolder.removeAllViews()
         localParticipantPipCameraHolder.removeAllViews()
 
@@ -212,9 +223,7 @@ internal class LocalParticipantView : ConstraintLayout {
             LocalParticipantViewMode.FULL_SCREEN -> localParticipantFullCameraHolder
         }
 
-        if (model.shouldDisplayVideo) {
-            addVideoView(model.videoStreamID!!, videoHolder)
-        }
+        videoHolder.addView(surfaceView, 0)
     }
 
     private fun addVideoView(videoStreamID: String, videoHolder: ConstraintLayout) {
@@ -225,7 +234,7 @@ internal class LocalParticipantView : ConstraintLayout {
                     R.drawable.azure_communication_ui_calling_corner_radius_rectangle_4dp
                 )
             }
-            videoHolder.addView(view, 0)
+            videoHolder.addView(surfaceView, 0)
         }
     }
 }

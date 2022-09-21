@@ -5,6 +5,7 @@ package com.azure.android.communication.ui.calling;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.SurfaceView;
 
 import com.azure.android.communication.calling.Call;
 import com.azure.android.communication.common.CommunicationIdentifier;
@@ -21,6 +22,7 @@ import com.azure.android.communication.ui.calling.models.CallCompositeParticipan
 import com.azure.android.communication.ui.calling.models.CallCompositeSetParticipantViewDataResult;
 import com.azure.android.communication.ui.calling.models.CallCompositeTeamsMeetingLinkLocator;
 import com.azure.android.communication.ui.calling.presentation.CallCompositeActivity;
+import com.azure.android.communication.ui.calling.presentation.fragment.calling.localuser.LocalParticipantView;
 import com.azure.android.communication.ui.calling.service.sdk.CallingSDKWrapper;
 
 import static com.azure.android.communication.ui.calling.service.sdk.TypeConversionsKt.into;
@@ -251,5 +253,9 @@ public final class CallComposite {
 
     public Call getCallObject() {
         return CallingSDKWrapper.Companion.getCall();
+    }
+
+    public SurfaceView getPipSurfaceView() {
+        return LocalParticipantView.Companion.getSurfaceView();
     }
 }
